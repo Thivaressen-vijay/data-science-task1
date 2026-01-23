@@ -1,0 +1,56 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+## Dataset Loading
+The dataset is loaded using pandas for further analysis.
+
+df = pd.read_csv("student-mat.csv")
+df.head()
+
+## Dataset Exploration
+We explore the dataset to understand its structure and contents.
+
+df.shape
+df.info()
+df.describe()
+
+## Missing Values Check
+Checking for missing values in the dataset.
+
+df.isnull().sum()
+
+## Duplicate Removal
+Removing duplicate rows to maintain data quality.
+
+df.duplicated().sum()
+df = df.drop_duplicates()
+
+
+## Analysis Questions
+avg_g3 = df['G3'].mean()
+avg_g3
+df[df['G3'] > 15].shape[0]
+df['studytime'].corr(df['G3'])
+df.groupby('sex')['G3'].mean()
+
+## Data Visualizations
+Visualizations help in identifying trends and relationships.
+
+plt.hist(df['G3'])
+plt.xlabel("Final Grade (G3)")
+plt.ylabel("Number of Students")
+plt.title("Distribution of Final Grades")
+plt.show()
+
+plt.scatter(df['studytime'], df['G3'])
+plt.xlabel("Study Time")
+plt.ylabel("Final Grade (G3)")
+plt.title("Study Time vs Final Grade")
+plt.show()
+
+df.groupby('sex')['G3'].mean().plot(kind='bar')
+plt.xlabel("Gender")
+plt.ylabel("Average Final Grade")
+plt.title("Average Grade by Gender")
+plt.show()
