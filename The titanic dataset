@@ -1,0 +1,48 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+df = pd.read_csv("train.csv")
+
+df.head()
+
+df.isnull().sum()
+
+
+df['Age'].fillna(df['Age'].median(), inplace=True)
+
+df.drop('Cabin', axis=1, inplace=True)
+
+
+gender_survival = df.groupby('Sex')['Survived'].mean()
+gender_survival
+
+
+
+class_survival = df.groupby('Pclass')['Survived'].mean()
+class_survival
+
+
+bins = [0, 12, 20, 40, 60, 80]
+labels = ['Child', 'Teen', 'Adult', 'Middle Age', 'Senior']
+
+df['AgeGroup'] = pd.cut(df['Age'], bins=bins, labels=labels)
+
+
+age_survival = df.groupby('AgeGroup')['Survived'].mean()
+age_survival
+
+
+sns.barplot(x='Sex', y='Survived', data=df)
+plt.title("Survival Rate by Gender")
+plt.show()
+
+
+
+plt.hist(df['Age'], bins=30)
+plt.title("Age Distribution of Passengers")
+plt.xlabel("Age")
+plt.ylabel("Count")
+plt.show()
